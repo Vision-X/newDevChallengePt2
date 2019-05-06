@@ -59,8 +59,8 @@ app.get('/api/locations', (req, res) => {
   console.log("LOCATIONS API ROUTE.......");
   queries.list().then(locations => {
     console.log("api location data: ", locations);
-    res.text(locations)
-    // res.json({ locations });
+    // res.text(locations)
+    res.json({ locations: locations });
   }).catch(console.error)
 });
 

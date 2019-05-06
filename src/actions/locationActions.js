@@ -1,5 +1,7 @@
 require('isomorphic-fetch');
 
+const API_URL = 'http://localhost:3001';
+
 const storeAllLocations = (locations) => {
   return {
     type: 'STORE_LOCATIONS',
@@ -9,7 +11,7 @@ const storeAllLocations = (locations) => {
 
 const fetchAllLocations = () => {
   return (dispatch) => {
-    return fetch('/locations', {
+    return fetch(API_URL + '/api/locations', {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
