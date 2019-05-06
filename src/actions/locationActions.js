@@ -9,7 +9,7 @@ const storeAllLocations = (locations) => {
 
 const fetchAllLocations = () => {
   return (dispatch) => {
-    return fetch('/locations', {
+    return fetch('/api/locations', {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
