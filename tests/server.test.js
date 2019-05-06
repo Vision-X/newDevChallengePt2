@@ -30,7 +30,7 @@ describe('Initiate migrations and seeds for server testing', () => {
     });
 
   describe('Testing API Routes', () => {
-    it('Error messages for undefined endpoints', (done) => {
+    it('Should respond with 404 at unspecified endpoints', (done) => {
       chai.request(server)
           .get('/red-wine')
           .end((err, res) => {
@@ -43,7 +43,7 @@ describe('Initiate migrations and seeds for server testing', () => {
 
   describe('API Route testing - get all route', () => {
     describe('GET route for /locations', () => {
-      it('Should return all locations', (done) => {
+      it('Should respond with 200 & return all locations', (done) => {
         chai.request(server)
             .get('/api/locations')
             .end((err, res) => {
@@ -76,7 +76,7 @@ describe('Initiate migrations and seeds for server testing', () => {
           "drawPoly": false
       };
 
-      it('respond with 201', (done) => {
+      it('Should respond with 201', (done) => {
           chai.request(server)
               .post('/api/add-location')
               .send(data)
@@ -84,7 +84,7 @@ describe('Initiate migrations and seeds for server testing', () => {
                   if (err) return done(err);
                   const location = res.body.location;
 
-                  res.body.should.have.status(201);
+                  res.should.have.status(201);
                   res.should.be.json;
 
                   location.should.be.a('object');
@@ -108,13 +108,12 @@ describe('Initiate migrations and seeds for server testing', () => {
         "drawPoly": true
       };
 
-      it('respond with 422 (Unprocessable Entity)', (done) => {
+      it('Should respond with 422 (Unprocessable Entity)', (done) => {
           chai.request(server)
               .post('/api/add-location')
               .send(data)
               .end((err, res) => {
                   if (err) return done(err);
-                  console.log(res);
                   res.should.have.status(422);
                   res.error.text.should.include("Invalid Coords");
                   done();

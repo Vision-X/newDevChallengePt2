@@ -44,10 +44,7 @@ app.use(morgan(process.env.NODE_ENV !== 'production' ? 'dev' : 'combined'));
 
 // GET all locations
 app.get('/api/locations', (req, res) => {
-  console.log("LOCATIONS API ROUTE.......");
   queries.list().then(locations => {
-    console.log("api location data: ", locations);
-    // res.text(locations)
     res.send({ locations: locations });
   }).catch(console.error)
 });
@@ -66,16 +63,19 @@ app.get('/api/locations/:id', (req, res) => {
 app.post('/api/add-location', (req, res) => {
   let Lat = req.body.lat;
   let Lng = req.body.lng;
-  console.log(Lat, Lng);
 
   if ((Lat < -90 || Lat > 90) || (Lng < -180 || Lng > 180)) {
-    console.log("Error: Invalid Coords: Out of allowed Range");
-    res.status(422).json({ message: "Invalid Coords: Please enter valid lat/lng values"} );
+    res.status(422).json({
+      message: "Invalid Coords: Please enter valid lat/lng values"
+    })
   } else {
     queries.create(req.body, 'locations')
-    .then(location => {
-      res.status(201).json({ location: location, status: 201 });
-    }).catch(console.error);
+           .then(location => {
+             res.status(201).json({
+               location: location,
+               status: 201
+             });
+           }).catch(console.error);
   }
 });
 
