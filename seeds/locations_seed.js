@@ -11,21 +11,21 @@ exports.seed = function(knex, Promise) {
             name: 'Denver',
             lat: 39.742043,
             lng: -104.991531,
-            drawPoly: false
+            drawpoly: false
           },
           {
             id: 2,
             name: 'LA',
             lat: 34.052235,
             lng: -118.243683,
-            drawPoly: false
+            drawpoly: false
           },
           {
             id: 3,
             name: 'Boston',
             lat: 42.364506,
             lng: -71.038887,
-            drawPoly: false
+            drawpoly: false
           }
         ])
       ])

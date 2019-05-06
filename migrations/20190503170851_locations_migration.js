@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
       table.text('name')
       table.float('lat')
       table.float('lng')
-      table.boolean('drawPoly')
+      table.boolean('drawpoly')
     })
   ]);
 };

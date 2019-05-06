@@ -73,7 +73,7 @@ describe('Initiate migrations and seeds for server testing', () => {
           "name": "dummy",
           "lat": 11.111,
           "lng": 100.000,
-          "drawPoly": false
+          "drawpoly": false
       };
 
       it('Should respond with 201', (done) => {
@@ -105,7 +105,7 @@ describe('Initiate migrations and seeds for server testing', () => {
         "name": "Houston",
         "lat": 1000,
         "lng": -1000,
-        "drawPoly": true
+        "drawpoly": true
       };
 
       it('Should respond with 422 (Unprocessable Entity)', (done) => {
@@ -124,7 +124,7 @@ describe('Initiate migrations and seeds for server testing', () => {
     })
   });
 
-  // Next Test / PUT name, coords(validate), drawPoly
+  // Next Test / PUT name, coords(validate), drawpoly
   // if POST item any key:values exists already in state, lets swap to PUT route
 
 });
