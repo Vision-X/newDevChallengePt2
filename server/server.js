@@ -66,7 +66,7 @@ app.get('/api/locations/:id', (req, res) => {
 app.post('/api/add-location', (req, res) => {
   queries.create(req.body, 'locations')
          .then(location => {
-           res.status(201).json({ location: location })
+           res.status(201).json({ location: location, status: 201 })
          }).catch(console.error);
 });
 
@@ -87,9 +87,9 @@ app.put('/api/locations/:id', (req, res) => {
 });
 
 // Errors
-// app.use((req, res) => {
-//   res.sendStatus(404);
-// })
+app.use((req, res) => {
+  res.sendStatus(404);
+})
 
 // For handling local proxy and file serving
 if (process.env.NODE_ENV !== 'production') {
