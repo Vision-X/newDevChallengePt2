@@ -10,34 +10,34 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan(process.env.NODE_ENV !== 'production' ? 'dev' : 'combined'));
 
-const initialLocations = [
-  {
-    id: 'id1',
-    name: 'Denver',
-    lat: 39.742043,
-    lng: -104.991531,
-  },
-  {
-    id: 'id2',
-    name: 'LA',
-    lat: 34.052235,
-    lng: -118.243683,
-  },
-  {
-    id: 'id3',
-    name: 'Boston',
-    lat: 42.364506,
-    lng: -71.038887,
-  },
-];
-
-app.locals.idIndex = 3;
-app.locals.locations = initialLocations;
-
-app.get('/locations', (req, res) => {
-  console.log("locations fetch request initiated...");
-  res.send({ locations: app.locals.locations });
-});
+// const initialLocations = [
+//   {
+//     id: 'id1',
+//     name: 'Denver',
+//     lat: 39.742043,
+//     lng: -104.991531,
+//   },
+//   {
+//     id: 'id2',
+//     name: 'LA',
+//     lat: 34.052235,
+//     lng: -118.243683,
+//   },
+//   {
+//     id: 'id3',
+//     name: 'Boston',
+//     lat: 42.364506,
+//     lng: -71.038887,
+//   },
+// ];
+//
+// app.locals.idIndex = 3;
+// app.locals.locations = initialLocations;
+//
+// app.get('/locations', (req, res) => {
+//   console.log("locations fetch request initiated...");
+//   res.send({ locations: app.locals.locations });
+// });
 
 
 // API Routes
@@ -64,16 +64,14 @@ app.get('/api/locations/:id', (req, res) => {
 
 // POST new location
 app.post('/api/add-location', (req, res) => {
-  // console.log("REQ DAT BODYYYYYYYYY!!!!!! : ", req.body);
   let Lat = req.body.lat;
   let Lng = req.body.lng;
   console.log(Lat, Lng);
 
   if ((Lat < -90 || Lat > 90) || (Lng < -180 || Lng > 180)) {
-    console.log("Invalid Coords: Out of allowed Range");
-    res.json({ status: 422, message: "Invalid Coords: Please enter valid lat/lng values" });
+    console.log("Error: Invalid Coords: Out of allowed Range");
+    res.status(422).json({ message: "Invalid Coords: Please enter valid lat/lng values"} );
   } else {
-    console.log("~ ~ ~ SHOULDNT BE HERE ON 5th TEST ~ ~ ~");
     queries.create(req.body, 'locations')
     .then(location => {
       res.status(201).json({ location: location, status: 201 });

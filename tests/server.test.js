@@ -62,14 +62,10 @@ describe('Initiate migrations and seeds for server testing', () => {
 
               done();
             })
-        // })
       });
     });
   });
 
-  /**
-   * Testing post user endpoint
-   */
   describe('POST /api/add-location', () => {
     describe('POST route for adding new location', () => {
 
@@ -78,7 +74,8 @@ describe('Initiate migrations and seeds for server testing', () => {
           "lat": 11.111,
           "lng": 100.000,
           "drawPoly": false
-      }
+      };
+
       it('respond with 201', (done) => {
           chai.request(server)
               .post('/api/add-location')
@@ -103,48 +100,32 @@ describe('Initiate migrations and seeds for server testing', () => {
 
   describe('POST /api/add-location', () => {
     describe('POST route error handling for invalid lat/lng', () => {
+
       let data = {
         "name": "Houston",
         "lat": 1000,
         "lng": -1000,
         "drawPoly": true
       };
-      it('respond with 422 Unprocessable Entity', (done) => {
+
+      it('respond with 422 (Unprocessable Entity)', (done) => {
           chai.request(server)
               .post('/api/add-location')
               .send(data)
               .end((err, res) => {
                   if (err) return done(err);
-                  res.body.should.have.status(422);
-                  res.body.message.should.include("Invalid Coords");
+                  console.log(res);
+                  res.should.have.status(422);
+                  res.error.text.should.include("Invalid Coords");
                   done();
               });
       });
 
 
     })
-  })
+  });
+
+  // Next Test / PUT name, coords(validate), drawPoly
+  // if POST item any key:values exists already in state, lets swap to PUT route
+
 });
-
-
-// describe('POST /users', function () {
-//     let data = {
-//         //no id
-//         "name": "dummy",
-//         "contact": "dummy",
-//         "address": "dummy"
-//     }
-//     it('respond with 400 not created', function (done) {
-//         request(app)
-//             .post('/users')
-//             .send(data)
-//             .set('Accept', 'application/json')
-//             .expect('Content-Type', /json/)
-//             .expect(400)
-//             .expect('"user not created"')
-//             .end((err) => {
-//                 if (err) return done(err);
-//                 done();
-//             });
-//     });
-// });
