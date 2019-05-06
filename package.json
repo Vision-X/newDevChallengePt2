@@ -33,7 +33,7 @@
     "nodemon": "^1.18.9"
   },
   "scripts": {
-    "start": "npm run server:start && npm run build",
+    "start": "npm run build && npm run server:start",
     "server:dev": "nodemon server/index.js",
     "server:start": "node server/index.js",
     "server:test": "NODE_ENV=test ./node_modules/.bin/mocha ./tests/server.test.js",
