@@ -39,18 +39,6 @@ app.get('/locations', (req, res) => {
   res.send({ locations: app.locals.locations });
 });
 
-// For handling local proxy and file serving
-if (process.env.NODE_ENV !== 'production') {
-  console.warn('WARNING: Proxying Traffic to: http://0.0.0.0:3000')
-  app.use('/', proxy({ target: 'http://127.0.0.1:3000', changeOrigin: true }))
-} else {
-  app.use(express.static(path.resolve(__dirname, '..', 'build')));
-};
-
-app.get('/', (req, res) => {
-  console.log("sending build file..........");
-  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
-});
 
 // API Routes
 
@@ -60,7 +48,7 @@ app.get('/api/locations', (req, res) => {
   queries.list().then(locations => {
     console.log("api location data: ", locations);
     // res.text(locations)
-    res.json({ locations: locations });
+    res.send({ locations: locations });
   }).catch(console.error)
 });
 
@@ -102,5 +90,18 @@ app.put('/api/locations/:id', (req, res) => {
 // app.use((req, res) => {
 //   res.sendStatus(404);
 // })
+
+// For handling local proxy and file serving
+if (process.env.NODE_ENV !== 'production') {
+  console.warn('WARNING: Proxying Traffic to: http://0.0.0.0:3000')
+  app.use('/', proxy({ target: 'http://127.0.0.1:3000', changeOrigin: true }))
+} else {
+  app.use(express.static(path.resolve(__dirname, '..', 'build')));
+};
+
+app.get('/', (req, res) => {
+  console.log("sending build file..........");
+  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+});
 
 module.exports = app;

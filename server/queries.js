@@ -1,5 +1,5 @@
 const db = require('./database-connection');
-
+console.log("deeeebeeeee : ", db);
 module.exports = {
   list() {
     return db('locations')
