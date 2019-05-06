@@ -2,7 +2,7 @@
   "name": "c3d-challenge",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001",
+  "proxy": "http://127.0.0.1:3001",
   "dependencies": {
     "body-parser": "^1.17.2",
     "cors": "^2.8.5",
@@ -12,6 +12,7 @@
     "isomorphic-fetch": "^2.2.1",
     "knex": "^0.16.5",
     "leaflet": "^1.0.3",
+    "morgan": "^1.9.1",
     "pg": "^7.10.0",
     "react": "16.7.0",
     "react-dom": "16.7.0",
@@ -30,8 +31,8 @@
   },
   "scripts": {
     "start": "npm run build && npm run server:start",
-    "server:dev": "nodemon server/server.js",
-    "server:start": "node server/server.js",
+    "server:dev": "nodemon server/index.js",
+    "server:start": "node server/index.js",
     "server:test": "NODE_ENV=test ./node_modules/.bin/mocha ./tests/server.spec.js",
     "dev": "react-scripts start",
     "build": "react-scripts build",

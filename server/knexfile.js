@@ -4,11 +4,23 @@ module.exports = {
   development: {
     client: 'pg',
     connection: 'postgresql:///locations-db',
+    migrations: {
+      directory: './migrations/'
+    },
+    seeds: {
+      directory: './seeds/'
+    }
   },
 
   test: {
     client: 'pg',
     connection: 'postgresql:///locations-db',
+    migrations: {
+      directory: './migrations/'
+    },
+    seeds: {
+      directory: './seeds/'
+    }
   },
 
   production: {

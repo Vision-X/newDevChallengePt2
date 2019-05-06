@@ -15,6 +15,9 @@ const fetchAllLocations = () => {
         Accept: 'application/json',
       },
     })
+      // .then(locations => locations.text())
+      // .then(text => console.log(text))
+      // .then(text => dispatch(storeAllLocations(text)));
       .then(locations => locations.json())
       .then(json => dispatch(storeAllLocations(json)));
   };
