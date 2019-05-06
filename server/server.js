@@ -1,7 +1,9 @@
-const express = require('express');
+const express    = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
-const app = express();
+const path       = require('path');
+const port       = parseInt(process.env.PORT || 3001);
+const proxy      = require('http-proxy-middleware');
+const app        = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -32,7 +34,13 @@ app.locals.locations = initialLocations;
 
 app.get('/locations', (req, res) => res.send({ locations: app.locals.locations }));
 
-app.use(express.static(path.resolve(__dirname, '..', 'build')));
+if (process.env.NODE_ENV !== 'production') {
+  console.warn('WARNING: Proxying Traffic to: http://0.0.0.0:3000')
+  app.use('/', proxy({ target: 'http://127.0.0.1:3000', changeOrigin: true }))
+} else {
+  app.use(express.static(path.resolve(__dirname, '..', 'build')));
+};
+
 
 app.get('/', (req, res) => {
   console.log("sending build file..........");
