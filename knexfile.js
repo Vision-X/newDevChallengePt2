@@ -14,7 +14,7 @@ module.exports = {
 
   production: {
     client: 'pg',
-    connection: process.env.DATABASE_URL || 'postgres://localhost/locations-db',
+    connection: `${process.env.DATABASE_URL}?ssl=true` || 'postgres://localhost/locations-db',
     pool: {
       min: 2,
       max: 10
