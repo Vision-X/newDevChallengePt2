@@ -35,7 +35,6 @@ describe('Initiate migrations and seeds for server testing', () => {
           .get('/red-wine')
           .end((err, res) => {
             res.should.have.status(404);
-              // res.statusCode.to.equal(404);
             res.text.should.include('Not Found');
             done();
           });
@@ -55,7 +54,6 @@ describe('Initiate migrations and seeds for server testing', () => {
               res.body.should.be.a('object');
               res.body.locations.should.be.a('array');
               res.body.locations.length.should.equal(3);
-              console.log("res.body ln57 : ", res.body);
 
               location.should.have.property('id');
               location.should.have.property('name');
@@ -87,22 +85,45 @@ describe('Initiate migrations and seeds for server testing', () => {
               .send(data)
               .end((err, res) => {
                   if (err) return done(err);
-                  // const location = res.body.locations[0];
-                  console.log(res.body);
+                  const location = res.body.location;
+
                   res.body.should.have.status(201);
                   res.should.be.json;
-                  res.body.should.be.a('object');
-                  res.body.location.should.be.a('object');
 
-                  res.body.location.should.have.property('id');
-                  res.body.location.should.have.property('name');
-                  res.body.location.should.have.property('lat');
-                  res.body.location.should.have.property('lng');
+                  location.should.be.a('object');
+                  location.should.have.property('id');
+                  location.should.have.property('name');
+                  location.should.have.property('lat');
+                  location.should.have.property('lng');
                   done();
               });
       });
     })
   });
+
+  describe('POST /api/add-location', () => {
+    describe('POST route error handling for invalid lat/lng', () => {
+      let data = {
+        "name": "Houston",
+        "lat": 1000,
+        "lng": -1000,
+        "drawPoly": true
+      };
+      it('respond with 422 Unprocessable Entity', (done) => {
+          chai.request(server)
+              .post('/api/add-location')
+              .send(data)
+              .end((err, res) => {
+                  if (err) return done(err);
+                  res.body.should.have.status(422);
+                  res.body.message.should.include("Invalid Coords");
+                  done();
+              });
+      });
+
+
+    })
+  })
 });
 
 

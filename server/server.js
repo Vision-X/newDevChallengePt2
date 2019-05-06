@@ -64,10 +64,21 @@ app.get('/api/locations/:id', (req, res) => {
 
 // POST new location
 app.post('/api/add-location', (req, res) => {
-  queries.create(req.body, 'locations')
-         .then(location => {
-           res.status(201).json({ location: location, status: 201 })
-         }).catch(console.error);
+  // console.log("REQ DAT BODYYYYYYYYY!!!!!! : ", req.body);
+  let Lat = req.body.lat;
+  let Lng = req.body.lng;
+  console.log(Lat, Lng);
+
+  if ((Lat < -90 || Lat > 90) || (Lng < -180 || Lng > 180)) {
+    console.log("Invalid Coords: Out of allowed Range");
+    res.json({ status: 422, message: "Invalid Coords: Please enter valid lat/lng values" });
+  } else {
+    console.log("~ ~ ~ SHOULDNT BE HERE ON 5th TEST ~ ~ ~");
+    queries.create(req.body, 'locations')
+    .then(location => {
+      res.status(201).json({ location: location, status: 201 });
+    }).catch(console.error);
+  }
 });
 
 // DELETE location
