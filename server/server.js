@@ -43,14 +43,14 @@ app.use(morgan(process.env.NODE_ENV !== 'production' ? 'dev' : 'combined'));
 // API Routes
 
 // GET all locations
-app.get('/api/locations', (req, res) => {
+app.get('/api/locations', async (req, res) => {
   queries.list().then(locations => {
     res.send({ locations: locations });
   }).catch(console.error)
 });
 
 // GET location by ID
-app.get('/api/locations/:id', (req, res) => {
+app.get('/api/locations/:id', async (req, res) => {
   queries.read(req.params.id)
          .then(location => {
            location
@@ -60,7 +60,7 @@ app.get('/api/locations/:id', (req, res) => {
 });
 
 // POST new location
-app.post('/api/add-location', (req, res) => {
+app.post('/api/add-location', async (req, res) => {
   let Lat = req.body.lat;
   let Lng = req.body.lng;
 
@@ -80,7 +80,7 @@ app.post('/api/add-location', (req, res) => {
 });
 
 // DELETE location
-app.delete('/api/locations/:id', (req, res) => {
+app.delete('/api/locations/:id', async (req, res) => {
   queries.delete(req.params.id)
          .then(() => {
            res.sendStatus(204);
@@ -88,7 +88,7 @@ app.delete('/api/locations/:id', (req, res) => {
 });
 
 // UPDATE existing location
-app.put('/api/locations/:id', (req, res) => {
+app.put('/api/locations/:id', async (req, res) => {
   queries.update(req.params.id, req.body)
          .then(location => {
            res.json({ location: location[0]});
@@ -96,7 +96,7 @@ app.put('/api/locations/:id', (req, res) => {
 });
 
 // Errors
-app.use((req, res) => {
+app.use(async (req, res) => {
   res.sendStatus(404);
 })
 
@@ -108,7 +108,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(express.static(path.resolve(__dirname, '..', 'build')));
 };
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   console.log("sending build file..........");
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
