@@ -29,7 +29,7 @@ exports.seed = function(knex, Promise) {
           }
         ])
       ])
-      })
+      // })
       .then(() => {
         return knex.raw('ALTER SEQUENCE locations_id_seq RESTART WITH 4;');
       })
