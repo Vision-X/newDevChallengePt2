@@ -61,22 +61,21 @@ app.get('/api/locations/:id', async (req, res) => {
 
 // POST new location
 app.post('/api/add-location', async (req, res) => {
-  let Lat = req.body.lat;
-  let Lng = req.body.lng;
+  let { lat, lng } = req.body;
+  console.log(lat, lng);
+  const isValid = (lat, lng) => {
+    return lat < -90 || lat > 90 || (lng < -180 || lng > 180) ? false : true;
+  };
 
-  if ((Lat < -90 || Lat > 90) || (Lng < -180 || Lng > 180)) {
-    res.status(422).json({
-      message: "Invalid Coords: Please enter valid lat/lng values"
-    })
-  } else {
-    queries.create(req.body, 'locations')
+  return (!isValid(lat, lng))
+    ? res.status(422).json({ message: "Invalid Coords: Please enter valid lat/lng values" })
+    : queries.create(req.body, 'locations')
            .then(location => {
              res.status(201).json({
                location: location,
                status: 201
              });
            }).catch(console.error);
-  }
 });
 
 // DELETE location

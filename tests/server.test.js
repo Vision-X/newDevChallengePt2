@@ -32,7 +32,7 @@ describe('Initiate migrations and seeds for server testing', () => {
   describe('Testing API Routes', () => {
     it('Should respond with 404 at unspecified endpoints', (done) => {
       chai.request(server)
-          .get('/red-wine')
+          .get('/api/red-wine')
           .end((err, res) => {
             res.should.have.status(404);
             res.text.should.include('Not Found');

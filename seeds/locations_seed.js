@@ -1,11 +1,10 @@
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  // return knex('locations').del()
-    // .then(function () {
+  return knex('locations').del()
+    .then(function () {
       // Inserts seed entries
-      return Promise.all([
-         knex('locations').insert([
+         return knex('locations').insert([
           {
             id: 1,
             name: 'Denver',
@@ -28,8 +27,7 @@ exports.seed = function(knex, Promise) {
             drawpoly: false
           }
         ])
-      ])
-      // })
+      })
       .then(() => {
         return knex.raw('ALTER SEQUENCE locations_id_seq RESTART WITH 4;');
       })
